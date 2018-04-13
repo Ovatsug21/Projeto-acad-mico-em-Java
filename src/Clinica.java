@@ -10,7 +10,6 @@ public class Clinica {
         this.nomeProfissional = nomeProfissional;
     }    
     public Clinica (){
-    
     }    
 
     public int getSenha() {

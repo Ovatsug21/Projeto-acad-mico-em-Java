@@ -1,4 +1,4 @@
-
+package sistemaoo2noite;
 public class Clinica {
     
     private int senha;

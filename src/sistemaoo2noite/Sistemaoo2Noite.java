@@ -5,6 +5,8 @@
  */
 package sistemaoo2noite;
 
+import interfaces.jfmPaginaPrincipal;
+
 /**
  *
  * @author Usuario
@@ -15,7 +17,8 @@ public class Sistemaoo2Noite {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+      /* jfmPaginaPrincipal j1 = new jfmPaginaPrincipal();
+       j1.setVisible(true);*/
     }
     
 }

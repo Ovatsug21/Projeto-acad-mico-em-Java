@@ -7,15 +7,15 @@ public class Medicos {
     private int CODIGO;
     private String NOME_MEDICO;
     private String CRM;
-    private String ESPECILIDADE;
-    private int CPF_MEDICO;
+    private String ESPECIALIDADE;
+    private String CPF_MEDICO;
     private Clinica Clin;
     
 public Medicos (){
 
 }
 
-public Medicos (int CODIGO, String NOME_MEDICO ,String CRM, String ESPECIALIDADE , int CPF){
+public Medicos (int CODIGO, String NOME_MEDICO ,String CRM, String ESPECIALIDADE , String CPF){
 
         this.CODIGO = CODIGO;
         this.NOME_MEDICO = NOME_MEDICO;
@@ -47,19 +47,19 @@ public Medicos (int CODIGO, String NOME_MEDICO ,String CRM, String ESPECIALIDADE
         this.CRM = CRM;
     }
 
-    public String getESPECILIDADE() {
-        return ESPECILIDADE;
+    public String getESPECIALIDADE() {
+        return ESPECIALIDADE;
     }
 
-    public void setESPECILIDADE(String ESPECILIDADE) {
-        this.ESPECILIDADE = ESPECILIDADE;
+    public void setESPECIALIDADE(String ESPECILIDADE) {
+        this.ESPECIALIDADE = ESPECILIDADE;
     }
 
-    public int getCPF_MEDICO() {
+    public String getCPF_MEDICO() {
         return CPF_MEDICO;
     }
 
-    public void setCPF_MEDICO(int CPF_MEDICO) {
+    public void setCPF_MEDICO(String CPF_MEDICO) {
         this.CPF_MEDICO = CPF_MEDICO;
     }
 

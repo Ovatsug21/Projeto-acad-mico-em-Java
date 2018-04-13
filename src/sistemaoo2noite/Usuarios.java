@@ -5,7 +5,7 @@ public class Usuarios {
    
     private String NOME_USUARIO; 
     private int SENHA_USUARIO;
-    private Clinica Clin;
+    private Clinica Clin; //NÃO SEI SE É NECESSÁRIO TER CLÍNICA 
     
     public Usuarios (){
     

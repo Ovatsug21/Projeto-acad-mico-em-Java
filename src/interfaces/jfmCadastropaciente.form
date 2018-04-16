@@ -194,6 +194,9 @@
     <Component class="javax.swing.JTextField" name="txtRG">
     </Component>
     <Component class="javax.swing.JTextField" name="txtCPF">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCPFActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>

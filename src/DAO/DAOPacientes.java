@@ -53,7 +53,7 @@ public class DAOPacientes {//DAO DATA ACCESS OBJECT - pesquisar
                 + p1.getNOME_MAE() +"','"
                 + p1.getENDERECO_PACIENTE() +"','"
                 + p1.getRG_PACIENTE() +"','"
-                + p1.getPRONTUARIO() +"','" // na dúvida se devo inserir Clínica
+                //+ p1.getPRONTUARIO() +"','"  na dúvida se devo inserir Clínica
                 + p1.getCPF_PACIENTE() + "');";
         JOptionPane.showMessageDialog(null,sql);//caixa de mensagem
         //System.out.println(sql);

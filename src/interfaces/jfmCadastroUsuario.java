@@ -5,6 +5,11 @@
  */
 package interfaces;
 
+import DAO.DAOPacientes;
+import DAO.DAOUsuarios;
+import sistemaoo2noite.Pacientes;
+import sistemaoo2noite.Usuarios;
+
 /**
  *
  * @author Usuario
@@ -44,6 +49,11 @@ public class jfmCadastroUsuario extends javax.swing.JFrame {
         jButton1.setText("Calcelar");
 
         jButton2.setText("Salvar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Cadastro Usuário");
@@ -94,6 +104,21 @@ public class jfmCadastroUsuario extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+         Usuarios u1 = new Usuarios();
+        u1.setNOME_USUARIO (txtNOME_USUARIO.getText());//convertendo para int
+        u1.setSENHA_USUARIO(Integer.parseInt (txtSENHA_USUARIO.getText()));
+        
+       // p1.setPRONTUARIO(txtProntuario.getText()); PESQUISAR AQUI ********************
+        //ListaDep.add(d1);
+        
+        DAOUsuarios.incluir(u1);
+        txtNOME_USUARIO.setText("");
+        txtSENHA_USUARIO.setText("");
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

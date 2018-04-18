@@ -5,16 +5,30 @@
  */
 package interfaces;
 
+import DAO.DAOMedicos;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import sistemaoo2noite.Medicos;
+
 /**
  *
  * @author Usuario
  */
 public class jfmCadastromedico extends javax.swing.JFrame {
 
+    public jfmCadastromedico() {
+        initComponents();
+        ListaMed = new ArrayList<Medicos>();
+        index = -1;
+    }
+    int index;
+    ArrayList<Medicos> ListaMed = new ArrayList<Medicos>();
+   // DefaultTableModel mod;modelo padrão de tabela
+    
     /**
      * Creates new form jfmCadastromedico
      */
-    public jfmCadastromedico() {
+    /*public jfmCadastromedico() {
         initComponents();
     }
 
@@ -52,8 +66,18 @@ public class jfmCadastromedico extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-----", "Clinico geral", "Pediatra", "Ortopedista", "Cardiologista" }));
 
         jButton1.setText("Salvar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Cadastro Médicos");
@@ -119,6 +143,26 @@ public class jfmCadastromedico extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Medicos m1 = new Medicos();
+        m1.setNOME_MEDICO (txtNomeMedico.getText());//convertendo para int
+        m1.setCPF_MEDICO(txtCpfMedico.getText());
+        m1.setCRM(txtCrmMedico.getText());
+        //m1.setESPECIALIDADE(jComboBox1.getSelectedIndex()));
+        ListaMed.add(m1);
+        
+        DAOMedicos.incluir(m1);
+        txtNomeMedico.setText("");
+        txtCpfMedico.setText("");
+        txtCrmMedico.setText("");
+        //jComboBox1.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

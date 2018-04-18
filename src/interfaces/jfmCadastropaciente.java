@@ -5,6 +5,12 @@
  */
 package interfaces;
 
+import DAO.DAOMedicos;
+import DAO.DAOPacientes;
+import java.util.ArrayList;
+import sistemaoo2noite.Medicos;
+import sistemaoo2noite.Pacientes;
+
 /**
  *
  * @author Usuario
@@ -15,8 +21,14 @@ public class jfmCadastropaciente extends javax.swing.JFrame {
      * Creates new form jfmCadastropaciente
      */
     public jfmCadastropaciente() {
-        initComponents();
+        
+           initComponents();
+        ListaPac = new ArrayList<Pacientes>();
+        index = -1;
     }
+    int index;
+    ArrayList<Pacientes> ListaPac = new ArrayList<Pacientes>();
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -238,6 +250,29 @@ public class jfmCadastropaciente extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+           Pacientes p1 = new Pacientes();
+        p1.setNOME_PACIENTE(txtNome.getText());//convertendo para int
+        p1.setCPF_PACIENTE(txtCPF.getText());
+        p1.setNOME_MAE(txtMae.getText());
+        p1.setCONTATO_PACIENTE(txtTelefone.getText());
+        p1.setDATA_NASCIMENTO(txtData.getText());
+        p1.setEMAIL_PACIENTE(txtEmail.getText());
+        p1.setENDERECO_PACIENTE(txtEndereco.getText());
+        p1.setRG_PACIENTE(txtRG.getText());
+        
+        //m1.setESPECIALIDADE(jComboBox1.getSelectedIndex()));
+        ListaPac.add(p1);
+        
+        DAOPacientes.incluir(p1);
+        txtNome.setText("");
+        txtCPF.setText("");
+        txtMae.setText("");
+        txtTelefone.setText("");
+        txtData.setText("");
+        txtEmail.setText("");
+        txtEndereco.setText("");
+        txtRG.setText("");
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCPFActionPerformed

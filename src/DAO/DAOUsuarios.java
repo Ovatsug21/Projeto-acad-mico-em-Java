@@ -2,6 +2,7 @@ package DAO;
 
 import sistemaoo2noite.Usuarios;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
@@ -43,20 +44,24 @@ public class DAOUsuarios {//DAO DATA ACCESS OBJECT - pesquisar
         }
     }
 
-    public static void incluir(Usuarios u1) {
+    public static void incluir(Usuarios u1){
         conectar();
-        String sql = "insert into usuarios values ("
+        String sql ="insert into usuarios values ("
                 + u1.getNOME_USUARIO()+ ",'" //QUANDO FOR TEXTO COLOCA(STRING,VARCHAR) APÓSTROFO''
                 + u1.getSENHA_USUARIO() + "');";
+       
         
         JOptionPane.showMessageDialog(null,sql);//caixa de mensagem
         //System.out.println(sql);
         
         try {
+            
             comando.executeUpdate(sql);
+            
             JOptionPane.showMessageDialog(null,"inserido com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"erro na inserção!");
+            System.out.println(ex);
         }
 
         desconectar();

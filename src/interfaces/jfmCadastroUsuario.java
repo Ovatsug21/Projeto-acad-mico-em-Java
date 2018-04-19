@@ -7,6 +7,8 @@ package interfaces;
 
 import DAO.DAOPacientes;
 import DAO.DAOUsuarios;
+import java.util.ArrayList;
+//import sistemaoo2noite.Medicos;
 import sistemaoo2noite.Pacientes;
 import sistemaoo2noite.Usuarios;
 
@@ -21,7 +23,13 @@ public class jfmCadastroUsuario extends javax.swing.JFrame {
      */
     public jfmCadastroUsuario() {
         initComponents();
+        
+             ListaU = new ArrayList<Usuarios>();
+        index = -1;
     }
+    int index;
+    ArrayList<Usuarios> ListaU = new ArrayList<Usuarios>();
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -113,11 +121,11 @@ public class jfmCadastroUsuario extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
          Usuarios u1 = new Usuarios();
-        u1.setNOME_USUARIO (txtNOME_USUARIO.getText());//convertendo para int
-        u1.setSENHA_USUARIO (txtSENHA_USUARIO.getText());
+        u1.setNOME_USUARIO ( txtNOME_USUARIO.getText());//convertendo para int
+        u1.setSENHA_USUARIO ( txtSENHA_USUARIO.getText());
         
        // p1.setPRONTUARIO(txtProntuario.getText()); PESQUISAR AQUI ********************
-        //ListaDep.add(d1);
+        ListaU.add(u1);
         
         DAOUsuarios.incluir(u1);
         txtNOME_USUARIO.setText("");

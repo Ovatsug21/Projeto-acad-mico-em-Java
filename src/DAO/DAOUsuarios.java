@@ -45,12 +45,13 @@ public class DAOUsuarios {//DAO DATA ACCESS OBJECT - pesquisar
 
     public static void incluir(Usuarios u1) {
         conectar();
-        String sql = "insert into usuarios values("
+        String sql = "insert into usuarios values ("
                 + u1.getNOME_USUARIO()+ ",'" //QUANDO FOR TEXTO COLOCA(STRING,VARCHAR) APÓSTROFO''
                 + u1.getSENHA_USUARIO() + "');";
+        
         JOptionPane.showMessageDialog(null,sql);//caixa de mensagem
         //System.out.println(sql);
-
+        
         try {
             comando.executeUpdate(sql);
             JOptionPane.showMessageDialog(null,"inserido com sucesso!");

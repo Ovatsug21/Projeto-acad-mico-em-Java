@@ -7,6 +7,7 @@ package interfaces;
 
 import DAO.DAOMedicos;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sistemaoo2noite.Medicos;
 
@@ -63,7 +64,12 @@ public class jfmCadastromedico extends javax.swing.JFrame {
 
         jLabel4.setText("CPF:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-----", "Clinico geral", "Pediatra", "Ortopedista", "Cardiologista" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Clinico geral", "Pediatra", "Ortopedista", "Cardiologista" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Salvar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -145,24 +151,35 @@ public class jfmCadastromedico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (jComboBox1.getSelectedItem().equals("Selecione")|| txtNomeMedico.getText().isEmpty() || txtCpfMedico.getText().isEmpty() || txtCrmMedico.getText().isEmpty() )
+        { 
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos !");
+        }else
+        {
         // TODO add your handling code here:
         Medicos m1 = new Medicos();
         m1.setNOME_MEDICO (txtNomeMedico.getText());//convertendo para int
         m1.setCPF_MEDICO(txtCpfMedico.getText());
         m1.setCRM(txtCrmMedico.getText());
-        //m1.setESPECIALIDADE(jComboBox1.getSelectedIndex()));
+        m1.setESPECIALIDADE((String)jComboBox1.getSelectedItem());
         ListaMed.add(m1);
         
         DAOMedicos.incluir(m1);
         txtNomeMedico.setText("");
         txtCpfMedico.setText("");
         txtCrmMedico.setText("");
-        //jComboBox1.setText("");
+        jComboBox1.setSelectedItem("");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments

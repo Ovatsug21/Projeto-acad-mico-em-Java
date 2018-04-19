@@ -47,6 +47,11 @@ public class jfmCadastroUsuario extends javax.swing.JFrame {
         jLabel2.setText("Senha:");
 
         jButton1.setText("Calcelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Salvar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +114,7 @@ public class jfmCadastroUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
          Usuarios u1 = new Usuarios();
         u1.setNOME_USUARIO (txtNOME_USUARIO.getText());//convertendo para int
-        u1.setSENHA_USUARIO(Integer.parseInt (txtSENHA_USUARIO.getText()));
+        u1.setSENHA_USUARIO (txtSENHA_USUARIO.getText());
         
        // p1.setPRONTUARIO(txtProntuario.getText()); PESQUISAR AQUI ********************
         //ListaDep.add(d1);
@@ -119,6 +124,11 @@ public class jfmCadastroUsuario extends javax.swing.JFrame {
         txtSENHA_USUARIO.setText("");
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

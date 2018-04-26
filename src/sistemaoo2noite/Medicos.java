@@ -4,7 +4,7 @@ package sistemaoo2noite;
 
 public class Medicos {
     
-    private int CODIGO;
+    private int CODIGO_MEDICO;
     private String NOME_MEDICO;
     private String CRM;
     private String ESPECIALIDADE;
@@ -15,20 +15,20 @@ public Medicos (){
 
 }
 
-public Medicos (int CODIGO, String NOME_MEDICO ,String CRM, String ESPECIALIDADE , String CPF){
+public Medicos (int CODIGO_MEDICO_MEDICO, String NOME_MEDICO ,String CRM, String ESPECIALIDADE , String CPF){
 
-        this.CODIGO = CODIGO;
+        this.CODIGO_MEDICO = CODIGO_MEDICO;
         this.NOME_MEDICO = NOME_MEDICO;
         this.CRM = CRM;
         this.CPF_MEDICO = CPF_MEDICO;
     }
 
-    public int getCODIGO() {
-        return CODIGO;
+    public int getCODIGO_MEDICO() {
+        return CODIGO_MEDICO;
     }
 
-    public void setCODIGO(int CODIGO) {
-        this.CODIGO = CODIGO;
+    public void setCODIGO_MEDICO(int CODIGO_MEDICO) {
+        this.CODIGO_MEDICO = CODIGO_MEDICO;
     }
 
     public String getNOME_MEDICO() {

@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import sistemaoo2noite.Pacientes;
 //import java.sql.* paga todos os imports sql de cima
 //IPC - para acessar o banco de dados é preciso add biblioteca do Mysql clicando com  botão direito
 //do mouse no projeto,propriedades,biblioteca,JDBC do MySQL
@@ -45,9 +46,8 @@ public class DAOagendamento {//DAO DATA ACCESS OBJECT - pesquisar
 
     public static void incluir(Agendamento a1) {
         conectar();
-        String sql = "insert into agendamento values("
-                + a1.getID_AGENDAMENTO()+ ",'" //QUANDO FOR TEXTO COLOCA(STRING,VARCHAR) APÓSTROFO''
-                + a1.getPRONTUARIO() +"','"
+        String sql = "insert into agendamento values(default,'"
+                + a1.getPRONTUARIO_EX() +"','"
                 + a1.getDATA_HORA() +"','"
                 + a1.getPROCEDIMENTOS()+ "');";
         JOptionPane.showMessageDialog(null,sql);//caixa de mensagem
@@ -80,11 +80,12 @@ public class DAOagendamento {//DAO DATA ACCESS OBJECT - pesquisar
 
     }
 
-    public static Agendamento pesquisar(int ID_AGENDAMENTO) {//retornou Pessoa(após o public) pq o pesquisar vai buscar Pessoa
+    public static Pacientes pesquisar(int PRONTUARIO) {//retornou Pessoa(após o public) pq o pesquisar vai buscar Pessoa
         conectar();
         Agendamento a1 = new Agendamento();
+        Pacientes p1 = new Pacientes();
         //int num_pessoa = codigo;
-        String sql = "select* from agendamento where ID_AGENDAMENTO ='" + ID_AGENDAMENTO + " ;";
+        String sql = "select* from agendamento where PRONTUARIO ='" + PRONTUARIO + " ;";
         
         ResultSet rs;
         //System.out.println(sql);
@@ -96,7 +97,7 @@ public class DAOagendamento {//DAO DATA ACCESS OBJECT - pesquisar
             {
                 rs.first();//posiciona o cursor no primeiro da lista(pesquisar)
                 a1.setID_AGENDAMENTO(rs.getInt("ID_AGENDAMENTO"));
-                //a1.setPRONTUARIO(PRONTUARIO);PRONTUARIO(rs.getInt("PRONTUARIO")); dando erro
+                p1.setPRONTUARIO(PRONTUARIO);//PRONTUARIO(rs.getInt("PRONTUARIO")); dando erro
                 a1.setDATA_HORA(rs.getString("local"));
                 a1.setPROCEDIMENTOS(rs.getString("PRONTUARIO"));
                 //a1.setCODIGO(rs.getInt("CODIGO_MEDICO")); incluir CODIGO NA CLASSE Agendamento
@@ -116,7 +117,7 @@ public class DAOagendamento {//DAO DATA ACCESS OBJECT - pesquisar
 
         desconectar();
 
-        return a1;
+        return p1;
 
     }
 

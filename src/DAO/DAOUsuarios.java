@@ -43,12 +43,70 @@ public class DAOUsuarios {//DAO DATA ACCESS OBJECT - pesquisar
             Logger.getLogger(DAOUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public boolean checkLogin(String login, String senha){
+        
+       conectar();
+       PreparedStatement stmt = null;
+       ResultSet rs =  null;
+       boolean check = false;
+       
+       try {
+          stmt = conn.prepareStatement("SELECT *FROM usuarios where NOME_USUARIO = ? and SENHA_USUARIO = ?");
+          stmt.setString(1, login);
+          stmt.setString(2, senha);
+          rs = stmt.executeQuery();
+          
+          if (rs.next()){
+              check = true;
+              
+          }
+          
+       } catch (SQLException ex){
+           Logger.getLogger(DAOUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+       } finally{
+           desconectar();
+       }
+      return check;
+    }
+    
+    public static Usuarios pesquisar(int ID ,String NOME_USUARIO, String SENHA_USUARIO) throws SQLException{
+        
+        
+        conectar();
+        Usuarios u1 = new Usuarios();
+        String sql = ("select *from usuarios where NOME_USUARIO = " + NOME_USUARIO + ";");
+        ResultSet rs;
+        try{
+                            rs = comando.executeQuery(sql);
 
+                       if (rs.last()) {
+
+                               rs.first();//posiciona o cursor no primeiro da lista(pesquisar)
+                               u1.setNOME_USUARIO(rs.getString("NOME_USUARIO"));
+                               u1.setSENHA_USUARIO(rs.getString("SENHA_USUARIO"));
+
+                       }else{
+                               JOptionPane.showMessageDialog(null,"não encontrado");
+                               //P = null;
+                               u1 = null;
+                           }
+        }catch (SQLException ex) {
+            u1 = null;
+           JOptionPane.showMessageDialog(null,"erro buscando o registro!");
+           System.out.println(ex);
+        }
+        desconectar();
+        return u1;
+        
+        
+        
+        
+    }
     public static void incluir(Usuarios u1){
         conectar();
-        String sql ="insert into usuarios values ("
-                + u1.getNOME_USUARIO()+ ",'" //QUANDO FOR TEXTO COLOCA(STRING,VARCHAR) APÓSTROFO''
-                + u1.getSENHA_USUARIO() + "');";
+        //String sql ="insert into usuarios  values (null,"+ u1.getNOME_USUARIO()+ ","  + u1.getSENHA_USUARIO() + ");";
+       String sql = ("insert into usuarios (nome, senha_usuario) values ('"+u1.getNOME_USUARIO()+"' , '"+u1.getSENHA_USUARIO()+"') " );
        
         
         JOptionPane.showMessageDialog(null,sql);//caixa de mensagem
@@ -157,5 +215,7 @@ public class DAOUsuarios {//DAO DATA ACCESS OBJECT - pesquisar
         //return true;
 
     //}
+
+    
 
 }

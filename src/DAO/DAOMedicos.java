@@ -2,6 +2,7 @@ package DAO;
 
 import sistemaoo2noite.Medicos;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class DAOMedicos {//DAO DATA ACCESS OBJECT - pesquisar
     public static void incluir(Medicos m1) {
         conectar();
         String sql = "insert into medicos values("
-                + m1.getCODIGO()+ ",'" //QUANDO FOR TEXTO COLOCA(STRING,VARCHAR) APÓSTROFO''
+                + m1.getCODIGO_MEDICO()+ ",'" //QUANDO FOR TEXTO COLOCA(STRING,VARCHAR) APÓSTROFO''
                 + m1.getNOME_MEDICO() +"','"
                 + m1.getCPF_MEDICO() +"','"
                 + m1.getESPECIALIDADE() +"','"
@@ -65,27 +66,31 @@ public class DAOMedicos {//DAO DATA ACCESS OBJECT - pesquisar
 
     }
 
-    public static void excluir(int CODIGO) {
+    public static Medicos excluir(Medicos mod) {
         conectar();
-        //int num_pessoa = codigo;// = CodigoCorrentista
-        String sql = "delete from medicos where CODIGO =" + CODIGO + " ;";
-
+        //Medicos med = new Medicos();
         try {
-            comando.executeUpdate(sql);
-            JOptionPane.showMessageDialog(null,"excluído com sucesso!");
+            
+            PreparedStatement pst = conn.prepareStatement("delete from medicos where CODIGO_MEDICO = ?");
+            pst.setInt(1,mod.getCODIGO_MEDICO());
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Excluído com sucesso !");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"erro na exclusão");
+            JOptionPane.showMessageDialog(null, "Erro ao excluir dados !");
+            System.out.println(ex);
         }
 
         desconectar();
+        return mod;
 
     }
 
-    public static Medicos pesquisar(int CODIGO) {//retornou Pessoa(após o public) pq o pesquisar vai buscar Pessoa
+
+    public static Medicos pesquisar(int CODIGO_MEDICO) {//retornou Pessoa(após o public) pq o pesquisar vai buscar Pessoa
         conectar();
         Medicos m1 = new Medicos(); // talvez não precise pesquisar médicos
         //int num_pessoa = codigo;
-        String sql = "select* from medicos where CODIGO ='" + CODIGO + " ;";
+        String sql = "select* from medicos where CODIGO_MEDICO ='" + CODIGO_MEDICO + " ;";
         
         ResultSet rs;
         //System.out.println(sql);
@@ -96,7 +101,7 @@ public class DAOMedicos {//DAO DATA ACCESS OBJECT - pesquisar
             if (rs.last())
             {
                 rs.first();//posiciona o cursor no primeiro da lista(pesquisar)
-                m1.setCODIGO(rs.getInt("CODIGO"));
+                m1.setCODIGO_MEDICO(rs.getInt("CODIGO_MEDICO"));
                 m1.setCRM(rs.getString("CRM"));
                 m1.setESPECIALIDADE(rs.getString("ESPECIALIDADE"));
                 m1.setNOME_MEDICO(rs.getString("NOME_MEDICO"));
@@ -127,7 +132,7 @@ public class DAOMedicos {//DAO DATA ACCESS OBJECT - pesquisar
                 +"',CRM ='"+ m1.getCRM()
                 +"',CRM ='"+ m1.getCPF_MEDICO()
                 +"',CRM ='"+ m1.getESPECIALIDADE()
-                +"' where CODIGO ="+m1.getCODIGO()
+                +"' where CODIGO_MEDICO ="+m1.getCODIGO_MEDICO()
                 +";";
        
         try {

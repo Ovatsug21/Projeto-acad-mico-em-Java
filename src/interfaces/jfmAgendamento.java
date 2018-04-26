@@ -5,17 +5,41 @@
  */
 package interfaces;
 
+import DAO.Banco;
+import DAO.DAOPacientes;
+import DAO.DAOagendamento;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import sistemaoo2noite.Agendamento;
+import sistemaoo2noite.ModeloTabela;
+import sistemaoo2noite.Pacientes;
+//import sistemaoo2noite.Pacientes;
+
 /**
  *
  * @author Usuario
  */
 public class jfmAgendamento extends javax.swing.JFrame {
 
+    
+    private static Connection conn;
+   private static Statement comando;
+    
     /**
      * Creates new form jfmAgendamento
      */
     public jfmAgendamento() {
         initComponents();
+        
+        cbbxMedico.enable(false);
+        cbbxMedico.setVisible(false);
     }
 
     /**
@@ -28,100 +52,381 @@ public class jfmAgendamento extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldProntuario = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableAgendamento = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTableagendamento2 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        btnSalvar = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
+        cbbxProcedimento = new javax.swing.JComboBox<>();
+        cbbxMedico = new javax.swing.JComboBox<>();
+        txtData = new javax.swing.JTextField();
+        try{    javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("##/##/####");    txtData = new javax.swing.JFormattedTextField(data); }    catch (Exception e){ }
+        lblData = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel2.setText("Digite o Prontuário :");
+
+        jButton3.setText("Cancelar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Pesquisar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jTableAgendamento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Prontuario", "Nome", "Procedimento", "Crm", "Nome_Medico"
+            }
+        ));
+        jScrollPane2.setViewportView(jTableAgendamento);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldProntuario, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4)
+                        .addGap(20, 20, 20))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(jButton4)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextFieldProntuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Pesquisar", jPanel2);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jTableagendamento2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nome", "Prontuário", "Cpf", "Endereco"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jLabel1.setText("Didite o Prontuário :");
+        jScrollPane1.setViewportView(jTableagendamento2);
 
         jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Salvar");
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
+
+        cbbxProcedimento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione o Procedimento", "Consulta", "Exame de sangue", "Raio-X" }));
+        cbbxProcedimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbxProcedimentoActionPerformed(evt);
+            }
+        });
+
+        cbbxMedico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione o Medico" }));
+        cbbxMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbxMedicoActionPerformed(evt);
+            }
+        });
+
+        lblData.setText("Data do agendamento:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(26, 26, 26)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(21, Short.MAX_VALUE))
+                            .addComponent(cbbxProcedimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(38, 38, 38)
+                            .addComponent(cbbxMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(lblData)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnNovo))
+                .addGap(0, 74, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addComponent(btnNovo)
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbbxProcedimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbxMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblData)
+                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(63, 63, 63))
+                    .addComponent(btnSalvar))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Novo", jPanel1);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 691, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 258, Short.MAX_VALUE)
-        );
-
-        jTabbedPane2.addTab("Pesquisar", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        Agendamento a1;
+        int PRONTUARIO = (Integer.parseInt(jTextFieldProntuario.getText()));//d1.setCodDep(Integer.parseInt (txtCodigo.getText()));
+       // a1 = DAOagendamento.pesquisar(PRONTUARIO);
+        try {
+            // TODO add your handling code here:
+            exibirTabela("select PRONTUARIO,NOME_PACIENTE,PROCEDIMENTOS,CRM,NOME_MEDICO from agendamento  inner join medicos  on CODIGO_MEDICO_EX = CODIGO_MEDICO "
+                    +"inner join pacientes on PRONTUARIO_EX = PRONTUARIO   where PRONTUARIO = " + jTextFieldProntuario.getText() + " ;");
+        } catch (SQLException ex) {
+            Logger.getLogger(jfmAgendamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                                                
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void cbbxProcedimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbxProcedimentoActionPerformed
+      if (cbbxProcedimento.getSelectedItem().equals("Consulta")){
+          cbbxMedico.enable(true);
+          cbbxMedico.setVisible(true);
+      }else{
+          cbbxMedico.enable(false);
+          cbbxMedico.setVisible(false);
+      }// TODO add your handling code here:
+    }//GEN-LAST:event_cbbxProcedimentoActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        Agendamento a1 = new Agendamento();
+        if ((String)cbbxProcedimento.getSelectedItem() != "Consulta"){
+            
+            a1.setPRONTUARIO_EX(jTableagendamento2.getColumn("Prontuário"));
+            a1.setPROCEDIMENTOS (txtNome.getText());//convertendo para int
+            a1.setDATA_HORA();
+        }
+        
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        int PRONTUARIO; 
+       Pacientes p1;
+       String PRONT = JOptionPane.showInputDialog(null,"Digite o prontuário do paciente :");
+        PRONTUARIO = Integer.parseInt(PRONT);
+       DAOPacientes dao = new DAOPacientes();
+        
+         p1 = DAOPacientes.pesquisar(PRONTUARIO);
+        
+        if(p1 != null){
+           
+           try {
+               exibirTabela2("select* from pacientes where PRONTUARIO = " + PRONTUARIO + " ;");
+           } catch (SQLException ex) {
+               Logger.getLogger(jfmPaginaPacientes.class.getName()).log(Level.SEVERE, null, ex);
+           }
+          
+        } else {}
+              
+       
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void cbbxMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbxMedicoActionPerformed
+        
+        try { 
+            exibirComboBox("select * from medicos");
+        } catch (SQLException ex) {
+            Logger.getLogger(jfmAgendamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_cbbxMedicoActionPerformed
+
+     public void exibirComboBox(String Sql) throws SQLException{
+   
+      ArrayList dados = new ArrayList();
+      //String[] colunas = new String []{"Código","Nome","Crm","Especialidade","Cpf"};
+      conn = Banco.conexao();
+      comando = conn.createStatement();
+           comando.executeQuery(Sql);
+           
+           try {
+               //String  sql = ("select* from pacientes");
+               ResultSet rs = comando.executeQuery(Sql);
+               while(rs.next ()){
+               dados.add(new Object[]{rs.getString("NOME_MEDICO")});
+               }              
+           
+           
+           
+          } catch (SQLException ex) {
+          
+              JOptionPane.showMessageDialog(null, ex);
+       
+          
+         }
+           //ModeloTabela modelo = new ModeloTabela(dados,colunas);
+           //cbbxMedico.
+           
+      //conn.close();
+    }
+    
+    
+    public void exibirTabela(String Sql) throws SQLException{
+   
+      ArrayList dados = new ArrayList();
+      String[] colunas = new String []{"Prontuario","Nome","Procedimento","Crm","Nome_Medico"};
+      conn = Banco.conexao();
+      comando = conn.createStatement();
+           comando.executeQuery(Sql);
+           
+           try {
+               //String  sql = ("select* from pacientes");
+               ResultSet rs = comando.executeQuery(Sql);
+               while(rs.next ()){
+               dados.add(new Object[]{rs.getInt("PRONTUARIO"),rs.getString("NOME_PACIENTE"),rs.getString("PROCEDIMENTOS"),rs.getString("CRM"),rs.getString("NOME_MEDICO")});
+               }              
+           
+           
+           
+          } catch (SQLException ex) {
+          
+              JOptionPane.showMessageDialog(null, ex);
+       
+          
+         }
+           ModeloTabela modelo = new ModeloTabela(dados,colunas);
+           jTableAgendamento.setModel(modelo);
+           
+      conn .close();
+     }
+     
+     
+     public void exibirTabela2(String Sql) throws SQLException{
+   
+      ArrayList dados = new ArrayList();
+      String[] colunas = new String []{"Nome","Prontuário","Cpf","Endereco"};
+      conn = Banco.conexao();
+      comando = conn.createStatement();
+           comando.executeQuery(Sql);
+           
+           try {
+               //String  sql = ("select* from pacientes")
+               ResultSet rs =  comando.executeQuery(Sql);
+               while(rs.next ()){
+               dados.add(new Object[]{rs.getString("NOME_PACIENTE"),rs.getInt("PRONTUARIO"),rs.getString("CPF_PACIENTE"),rs.getString("ENDERECO_PACIENTE")});
+               }              
+           
+           
+           
+          } catch (SQLException ex) {
+          
+              JOptionPane.showMessageDialog(null, ex);
+       
+          
+         }
+           ModeloTabela modelo = new ModeloTabela(dados,colunas);
+           jTableagendamento2.setModel(modelo);
+           
+      conn .close();
+     }
     /**
      * @param args the command line arguments
      */
@@ -158,14 +463,23 @@ public class jfmAgendamento extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<String> cbbxMedico;
+    private javax.swing.JComboBox<String> cbbxProcedimento;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jTableAgendamento;
+    private javax.swing.JTable jTableagendamento2;
+    private javax.swing.JTextField jTextFieldProntuario;
+    private javax.swing.JLabel lblData;
+    private javax.swing.JTextField txtData;
     // End of variables declaration//GEN-END:variables
 }

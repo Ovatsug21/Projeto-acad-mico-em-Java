@@ -5,7 +5,7 @@ package sistemaoo2noite;
 public class Agendamento {
     
     private int ID_AGENDAMENTO;
-    private Pacientes PRONTUARIO;// COLOQUEI PACIENTES PRA PEGAR O PRONTUÁRIO DELE
+    private Pacientes PRONTUARIO_EX;// COLOQUEI PACIENTES PRA PEGAR O PRONTUÁRIO DELE
     private String DATA_HORA;
     private Medicos CRM;// MESMA COISA AQUI,PORÉM NÃO SEI SE ESTÁ CORRETO.
     private String PROCEDIMENTOS;
@@ -15,13 +15,13 @@ public class Agendamento {
     
     }
     
-    public Agendamento(int ID_AGENDAMENTO , Pacientes PRONTUARIO , String DATA_HORA , Medicos CRM ,String PROCEDIMENTOS){
+    public Agendamento(int ID_AGENDAMENTO , Pacientes PRONTUARIO_EX , String DATA_HORA , Medicos CRM ,String PROCEDIMENTOS){
         
         this.CRM = CRM;
         this.DATA_HORA = DATA_HORA;
         this.ID_AGENDAMENTO = ID_AGENDAMENTO;
         this.PROCEDIMENTOS = PROCEDIMENTOS;
-        this.PRONTUARIO = PRONTUARIO;
+        this.PRONTUARIO_EX = PRONTUARIO_EX;
     }
 
     public int getID_AGENDAMENTO() {
@@ -32,12 +32,12 @@ public class Agendamento {
         this.ID_AGENDAMENTO = ID_AGENDAMENTO;
     }
 
-    public Pacientes getPRONTUARIO() {
-        return PRONTUARIO;
+    public Pacientes getPRONTUARIO_EX() {
+        return PRONTUARIO_EX;
     }
 
-    public void setPRONTUARIO(Pacientes PRONTUARIO) {
-        this.PRONTUARIO = PRONTUARIO;
+    public void setPRONTUARIO_EX(Pacientes PRONTUARIO_EX) {
+        this.PRONTUARIO_EX = PRONTUARIO_EX;
     }
 
     public String getDATA_HORA() {
